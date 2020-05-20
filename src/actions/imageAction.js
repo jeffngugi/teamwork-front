@@ -1,41 +1,42 @@
 import axios from "axios";
 import { GET_ALL_IMAGES, IMAGES_LOADING } from "./types";
+import URL from "../helpers/url";
 
-export const getImages = () => async dispatch => {
+export const getImages = () => async (dispatch) => {
   dispatch(imagesLoading());
   const config = {
     headers: {
-      "Content-Type": "application/json"
-    }
+      "Content-Type": "application/json",
+    },
   };
   await axios
-    .get("/gifs", config)
+    .get(`${URL}/gifs`, config)
     // .then(res => console.log(res.data.data))
-    .then(res =>
+    .then((res) =>
       dispatch({
         type: GET_ALL_IMAGES,
-        payload: res.data.data
+        payload: res.data.data,
       })
     )
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
   console.log("Action to get images");
 };
 
-export const postGif = formData => async dispatch => {
+export const postGif = (formData) => async (dispatch) => {
   console.log(formData);
   const config = {
     headers: {
-      "content-type": "multipart/form-data"
-    }
+      "content-type": "multipart/form-data",
+    },
   };
   await axios
-    .post("/gifs", formData, config)
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+    .post(`${URL}/gifs`, formData, config)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
 };
 
 export const imagesLoading = () => {
   return {
-    type: IMAGES_LOADING
+    type: IMAGES_LOADING,
   };
 };
